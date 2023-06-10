@@ -3,14 +3,14 @@ import SubredditSelect from '../components/SubredditSelect';
 
 export default function Header() {
   return (
-    <header className='navbar font-poppins bg-base-100 fixed px-8 border-b border-b-neutral py-6 transition-all ease-in-out duration-150 flex-col xl:px-60 md:flex-row'>
+    <header className='navbar fixed z-10 flex-col border-b border-b-neutral bg-base-100 px-8 py-6 font-poppins transition-all duration-150 ease-in-out md:flex-row xl:px-60'>
       <div className='flex-1'>
-        <a className='btn btn-ghost normal-case text-2xl'>
-          <RiRedditLine className='w-8 h-8' />
+        <a className='btn-ghost btn text-2xl normal-case'>
+          <RiRedditLine className='h-8 w-8' />
           redditreader
         </a>
       </div>
-      <div className='flex-none w-full md:w-auto'>
+      <div className='w-full flex-none md:w-auto'>
         <SubredditSelect />
       </div>
     </header>

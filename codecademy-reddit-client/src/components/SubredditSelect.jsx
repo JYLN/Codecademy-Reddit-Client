@@ -6,17 +6,17 @@ export default function SubredditSelect() {
   };
 
   return (
-    <form className='form-control w-full md:w-90' onSubmit={handleSubmit}>
+    <form className='md:w-90 form-control w-full' onSubmit={handleSubmit}>
       <div className='relative'>
         <input
-          className='input input-bordered input-md w-full pr-16'
+          className='input-bordered input input-md w-full pr-16'
           type='text'
           placeholder='Enter a subreddit name to read...'
         />
         <button
-          className='btn btn-secondary absolute top-0 right-0 rounded-l-none'
+          className='btn-secondary btn absolute right-0 top-0 rounded-l-none'
           type='submit'>
-          <RiDownloadLine className='w-6 h-6' />
+          <RiDownloadLine className='h-6 w-6' />
         </button>
       </div>
     </form>
