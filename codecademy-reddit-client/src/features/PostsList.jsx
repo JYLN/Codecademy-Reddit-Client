@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Post from '../components/Post';
 import PostLoading from '../components/PostLoading';
 import {
+  fetchComments,
   fetchPosts,
   getLoadingPosts,
   getPosts,
@@ -17,15 +18,23 @@ export default function PostsList() {
 
   useEffect(() => {
     if (selectedSubreddit) {
-      console.log(selectedSubreddit);
       dispatch(fetchPosts(selectedSubreddit));
     }
   }, [dispatch, selectedSubreddit]);
 
+  const handleClick = index => {
+    const getComments = permalink => {
+      dispatch(fetchComments(index, permalink));
+    };
+
+    return getComments;
+  };
+
   return (
     <>
       {loadingPosts ? (
-        <div className='w-full columns-2 gap-6'>
+        <div className='w-full gap-6 lg:columns-2'>
+          <PostLoading />
           <PostLoading />
           <PostLoading />
           <PostLoading />
@@ -34,8 +43,8 @@ export default function PostsList() {
         <h1 className='w-full font-poppins text-4xl font-bold'>No subreddit found...</h1>
       ) : (
         <div className='w-full gap-6 lg:columns-2 xl:columns-3'>
-          {posts.map(post => (
-            <Post key={post.id} post={post} />
+          {posts.map((post, index) => (
+            <Post key={post.id} post={post} showComments={handleClick(index)} />
           ))}
         </div>
       )}

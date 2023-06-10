@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getSubredditPosts } from '../api/reddit';
+import { getSubredditPostComments, getSubredditPosts } from '../api/reddit';
 
 const redditSlice = createSlice({
   name: 'reddit',
@@ -35,6 +35,19 @@ const redditSlice = createSlice({
       state.loadingPosts = false;
       state.failedLoadingPosts = true;
     },
+    startGetComments: (state, action) => {
+      state.posts[action.payload].loadingComments = true;
+      state.posts[action.payload].errorLoadingComments = false;
+    },
+    getCommentsSuccess: (state, action) => {
+      state.posts[action.payload.index].loadingComments = false;
+      state.posts[action.payload.index].comments = action.payload.comments;
+      state.posts[action.payload.index].errorLoadingComments = false;
+    },
+    getCommentsFailed: (state, action) => {
+      state.posts[action.payload].loadingComments = false;
+      state.posts[action.payload].errorLoadingComments = true;
+    },
   },
 });
 
@@ -45,6 +58,9 @@ export const {
   startGetPosts,
   getPostsSuccess,
   getPostsFailed,
+  startGetComments,
+  getCommentsSuccess,
+  getCommentsFailed,
 } = redditSlice.actions;
 export default redditSlice.reducer;
 
@@ -54,13 +70,30 @@ export const addSelectedSubreddit = subreddit => async dispatch => {
 };
 
 export const fetchPosts = subreddit => async dispatch => {
-  dispatch(startGetPosts());
   try {
+    dispatch(startGetPosts());
     const posts = await getSubredditPosts(subreddit);
-    dispatch(getPostsSuccess(posts));
+    const postsWithMetaData = posts.map(post => ({
+      ...post,
+      comments: [],
+      loadingComments: false,
+      errorLoadingComments: false,
+    }));
+    dispatch(getPostsSuccess(postsWithMetaData));
   } catch (err) {
     console.log(err);
     dispatch(getPostsFailed());
+  }
+};
+
+export const fetchComments = (index, permalink) => async dispatch => {
+  try {
+    dispatch(startGetComments(index));
+    const comments = await getSubredditPostComments(permalink);
+    dispatch(getCommentsSuccess({ index, comments }));
+  } catch (err) {
+    console.log(err);
+    dispatch(getCommentsFailed(index));
   }
 };
 
@@ -68,3 +101,7 @@ export const getSelectedSubreddit = state => state.reddit.selectedSubreddit;
 export const getPreviousSelectedSubreddit = state => state.reddit.previousSelectedSubreddit;
 export const getPosts = state => state.reddit.posts;
 export const getLoadingPosts = state => state.reddit.loadingPosts;
+export const getPostComments = id => state =>
+  state.reddit.posts.find(post => post.id === id).comments;
+export const getLoadingComments = id => state =>
+  state.reddit.posts.find(post => post.id === id).loadingComments;
