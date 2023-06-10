@@ -13,6 +13,7 @@ export default function SubredditSelect() {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(addSelectedSubreddit(subreddit));
+    setSubreddit('');
   };
 
   return (

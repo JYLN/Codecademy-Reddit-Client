@@ -83,6 +83,8 @@ export const fetchPosts = subreddit => async dispatch => {
   } catch (err) {
     console.log(err);
     dispatch(getPostsFailed());
+    dispatch(setSelectedSubreddit(''));
+    dispatch(removePreviousSelectedSubreddit(subreddit));
   }
 };
 
@@ -101,6 +103,7 @@ export const getSelectedSubreddit = state => state.reddit.selectedSubreddit;
 export const getPreviousSelectedSubreddit = state => state.reddit.previousSelectedSubreddit;
 export const getPosts = state => state.reddit.posts;
 export const getLoadingPosts = state => state.reddit.loadingPosts;
+export const getLoadingPostsFailed = state => state.reddit.failedLoadingPosts;
 export const getPostComments = id => state =>
   state.reddit.posts.find(post => post.id === id).comments;
 export const getLoadingComments = id => state =>
