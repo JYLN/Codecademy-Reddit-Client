@@ -15,7 +15,7 @@ export default function SubredditList() {
   };
 
   return (
-    <aside className='card row-start-1 self-start border border-neutral bg-base-100 shadow-lg md:col-span-2 md:row-start-auto'>
+    <aside className='card w-full self-start border border-neutral bg-base-100 shadow-lg md:w-1/4'>
       <div className='card-body'>
         <h2 className='card-title font-poppins'>Recent Subreddits</h2>
         <ul className='menu rounded-box menu-vertical menu-lg'>
