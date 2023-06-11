@@ -16,16 +16,13 @@ export default function Post({ post, showComments }) {
     window[modalIdString].showModal();
   };
 
-  const isUrlImage = () => {
-    const urlMatch = /.png|.jpg|.webp|.jpeg/.test(url);
-    return urlMatch;
-  };
+  const isUrlImage = () => /.png|.jpg|.webp|.jpeg/.test(url);
 
   return (
     <>
       <div
         onClick={handleClick}
-        className='card mb-10 border border-neutral bg-base-100 shadow-lg'>
+        className='card mb-8 break-inside-avoid break-after-avoid border border-neutral bg-base-100 shadow-lg'>
         {isUrlImage() && (
           <figure>
             <img src={url} />

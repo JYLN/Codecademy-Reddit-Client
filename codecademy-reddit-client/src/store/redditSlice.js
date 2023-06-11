@@ -22,6 +22,9 @@ const redditSlice = createSlice({
         subreddit => action.payload !== subreddit
       );
     },
+    setPosts: (state, action) => {
+      state.posts = action.payload;
+    },
     startGetPosts: state => {
       state.loadingPosts = true;
       state.failedLoadingPosts = false;
@@ -55,6 +58,7 @@ export const {
   setSelectedSubreddit,
   addPreviousSelectedSubreddit,
   removePreviousSelectedSubreddit,
+  setPosts,
   startGetPosts,
   getPostsSuccess,
   getPostsFailed,
@@ -86,6 +90,11 @@ export const fetchPosts = subreddit => async dispatch => {
     dispatch(setSelectedSubreddit(''));
     dispatch(removePreviousSelectedSubreddit(subreddit));
   }
+};
+
+export const clearPosts = () => async dispatch => {
+  dispatch(setSelectedSubreddit(''));
+  dispatch(setPosts([]));
 };
 
 export const fetchComments = (index, permalink) => async dispatch => {

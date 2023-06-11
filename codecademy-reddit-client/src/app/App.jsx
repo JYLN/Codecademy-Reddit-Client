@@ -6,7 +6,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <section className='container relative top-48 mx-auto mb-20 flex flex-col-reverse gap-8 md:flex-row lg:gap-14'>
+      <section className='container relative top-32 mx-auto flex h-max flex-col-reverse gap-8 px-4 py-20 sm:px-0 md:flex-row lg:gap-14'>
         <PostsList />
         <SubredditList />
       </section>
