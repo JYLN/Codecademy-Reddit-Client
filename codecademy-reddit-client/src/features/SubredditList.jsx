@@ -3,11 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getPreviousSelectedSubreddit,
   removePreviousSelectedSubreddit,
+  setSelectedSubreddit,
 } from '../store/redditSlice';
 
 export default function SubredditList() {
   const previousSelectedSubreddit = useSelector(getPreviousSelectedSubreddit);
   const dispatch = useDispatch();
+
+  const handleClick = subreddit => {
+    dispatch(setSelectedSubreddit(subreddit));
+  };
 
   const handleDelete = e => {
     const subreddit = e.target.closest('li').dataset.subreddit;
@@ -25,7 +30,10 @@ export default function SubredditList() {
             </li>
           ) : (
             previousSelectedSubreddit.map(subreddit => (
-              <li key={subreddit} data-subreddit={subreddit}>
+              <li
+                key={subreddit}
+                data-subreddit={subreddit}
+                onClick={() => handleClick(subreddit)}>
                 <a className='justify-between'>
                   r/{subreddit}
                   <button onClick={handleDelete} className='btn-outline btn-square btn-xs btn'>
