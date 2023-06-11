@@ -22,7 +22,7 @@ export default function Post({ post, showComments }) {
     <>
       <div
         onClick={handleClick}
-        className='card mb-8 break-inside-avoid break-after-avoid border border-neutral bg-base-100 shadow-lg'>
+        className='card mb-8 cursor-pointer break-inside-avoid break-after-avoid border border-neutral bg-base-100 shadow-lg transition-all duration-200 ease-in hover:bg-neutral hover:shadow-2xl'>
         {isUrlImage() && (
           <figure>
             <img src={url} />
@@ -48,7 +48,7 @@ export default function Post({ post, showComments }) {
       </div>
 
       <dialog id={`modal_${id}`} className='modal'>
-        <form method='dialog' className='prose modal-box'>
+        <form method='dialog' className='prose modal-box max-w-6xl'>
           <button
             htmlFor={`modal_${id}`}
             className='btn-ghost btn-sm btn-circle btn absolute right-2 top-2'>
@@ -93,6 +93,9 @@ export default function Post({ post, showComments }) {
               ))
             )}
           </ul>
+        </form>
+        <form method='dialog' className='modal-backdrop'>
+          <button>close</button>
         </form>
       </dialog>
     </>
